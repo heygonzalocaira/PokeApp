@@ -9,8 +9,12 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
+  poke_api:
+    path: "../poke_api"
+  json_annotation: ^4.6.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
   very_good_analysis: ^3.0.1
+  json_serializable: ^6.3.1
+  build_runner: ^2.0.0

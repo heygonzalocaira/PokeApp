@@ -13,7 +13,7 @@ class Pokemon {
 
   factory Pokemon.fromJson(Map<String, dynamic> json) =>
       _$PokemonFromJson(json);
-  Map<String, dynamic> toJson() => _$PokemonToJson(this);
+  Map<String, dynamic> toJson(Pokemon item) => _$PokemonToJson(this);
 
   toList() {}
 }

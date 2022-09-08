@@ -31,11 +31,11 @@ class PokeApiClient {
     } on SocketException {
       throw HttpException(message: 'No internet connection');
     }
-    if (response.statusCode != 200) {
+    if (response.statusCode == 200) {
       throw HttpRequestFailure(response.statusCode);
     }
     try {
-      body = jsonDecode(response.body) as List;
+      body = jsonDecode(response.body)['results'] as List;
     } on Exception {
       throw JsonDecodeException();
     }
