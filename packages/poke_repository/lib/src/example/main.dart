@@ -3,7 +3,7 @@ import 'package:poke_repository/poke_repository.dart';
 void main() async {
   final pokeRepository = PokeRepository();
   try {
-    final pokemons = await pokeRepository.getRangePokemons();
+    final pokemons = await pokeRepository.fetchRangePokemons();
     for (final pokemon in pokemons) {
       print(pokemon.name);
     }

@@ -31,7 +31,7 @@ class PokeApiClient {
     } on SocketException {
       throw HttpException(message: 'No internet connection');
     }
-    if (response.statusCode == 200) {
+    if (response.statusCode != 200) {
       throw HttpRequestFailure(response.statusCode);
     }
     try {

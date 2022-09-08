@@ -1,7 +1,5 @@
 // ignore_for_file: public_member_api_docs, join_return_with_assignment
 
-import 'dart:collection';
-
 import 'package:poke_api/poke_api.dart';
 import 'package:poke_repository/poke_repository.dart';
 
@@ -17,7 +15,7 @@ class PokeRepository {
   List<PokemonRepository> get pokemons => _pokemons;
   List<PokemonRepository> _pokemons = [];
 
-  Future<List<PokemonRepository>> getRangePokemons() async {
+  Future<List<PokemonRepository>> fetchRangePokemons() async {
     try {
       final pokemons = await _pokeApiClient.getRangePokemons(_pokemons.length);
       final json = pokemons.map((item) => item.toJson(item)).toList();
