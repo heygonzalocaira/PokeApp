@@ -1,5 +1,5 @@
-import 'package:bloc_pokeapi/AbilityPage/cubit/pokemon_ability_cubit.dart';
-import 'package:bloc_pokeapi/AbilityPage/view/ability_view.dart';
+import 'package:bloc_pokeapi/ability/cubit/pokemon_ability_cubit.dart';
+import 'package:bloc_pokeapi/ability/view/ability_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:poke_repository/poke_repository.dart';
