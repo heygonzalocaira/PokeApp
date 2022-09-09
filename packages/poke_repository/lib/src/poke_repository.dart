@@ -2,6 +2,7 @@
 
 import 'package:poke_api/poke_api.dart';
 import 'package:poke_repository/poke_repository.dart';
+import 'package:poke_repository/src/models/pokemon_ability_repository.dart';
 
 /// {@template poke_repository}
 /// My new Flutter package
@@ -13,16 +14,14 @@ class PokeRepository {
   final PokeApiClient _pokeApiClient;
 
   List<PokemonRepository> get pokemons => _pokemons;
-  List<PokemonRepository> _pokemons = [];
+  final List<PokemonRepository> _pokemons = [];
 
   Future<List<PokemonRepository>> fetchRangePokemons() async {
     try {
       final pokemons = await _pokeApiClient.getRangePokemons(_pokemons.length);
       final json = pokemons.map((item) => item.toJson(item)).toList();
-      _pokemons = [
-        ..._pokemons,
-        ...json.map(PokemonRepository.fromJson).toList()
-      ];
+      final listPokemons = json.map(PokemonRepository.fromJson).toList();
+      _pokemons.addAll(listPokemons);
     } on HttpException catch (e, stackTrace) {
       throw PokemonHttpException(e, stackTrace: stackTrace);
     } on HttpRequestFailure catch (e, stackTrace) {
@@ -33,6 +32,22 @@ class PokeRepository {
       throw PokemonJsonException(e, stackTrace: stackTrace);
     }
     return _pokemons;
+  }
+
+  Future<List<PokemonAbilityRepository>> fetchPokemonsAbilities() async {
+    try {
+      final pokemons = await _pokeApiClient.getPokemonsAbilities(1);
+      final json = pokemons.map((item) => item.toJson(item)).toList();
+      return json.map(PokemonAbilityRepository.fromJson).toList();
+    } on HttpException catch (e, stackTrace) {
+      throw PokemonHttpException(e, stackTrace: stackTrace);
+    } on HttpRequestFailure catch (e, stackTrace) {
+      throw PokemonHttpException(e, stackTrace: stackTrace);
+    } on JsonDecodeException catch (e, stackTrace) {
+      throw PokemonJsonException(e, stackTrace: stackTrace);
+    } on JsonDesearilizationException catch (e, stackTrace) {
+      throw PokemonJsonException(e, stackTrace: stackTrace);
+    }
   }
 }
 

@@ -5,6 +5,7 @@ import 'dart:io';
 
 import 'package:http/http.dart' as http;
 import 'package:poke_api/src/models/pokemon.dart';
+import 'package:poke_api/src/models/pokemon_ability.dart';
 
 /// {@template poke_api}
 /// My new Flutter package
@@ -15,7 +16,6 @@ class PokeApiClient {
 
   final http.Client _httpClient;
 
-  /// {@macro poke_api}
   String endPoint = 'pokeapi.co';
   Future<List<Pokemon>> getRangePokemons(int offset) async {
     final query = <String, String>{'offset': offset.toString(), 'limit': '20'};
@@ -42,6 +42,38 @@ class PokeApiClient {
     try {
       return body
           .map((item) => Pokemon.fromJson(item as Map<String, dynamic>))
+          .toList();
+    } catch (e) {
+      throw JsonDesearilizationException();
+    }
+  }
+
+  // Functions to get abilities from a pokemon
+  Future<List<PokemonAbility>> getPokemonsAbilities(int index) async {
+    final uri = Uri.http(endPoint, '/api/v2/pokemon/$index');
+    return _fetchPokemonAbility(uri);
+  }
+
+  Future<List<PokemonAbility>> _fetchPokemonAbility(Uri uri) async {
+    http.Response response;
+    List body;
+    try {
+      response = await _httpClient.get(uri);
+    } on SocketException {
+      throw HttpException(message: 'No internet connection');
+    }
+    if (response.statusCode != 200) {
+      throw HttpRequestFailure(response.statusCode);
+    }
+    try {
+      body = jsonDecode(response.body)['abilities'] as List;
+    } on Exception {
+      throw JsonDecodeException();
+    }
+    try {
+      return body
+          .map((item) =>
+              PokemonAbility.fromJson(item['ability'] as Map<String, dynamic>))
           .toList();
     } catch (e) {
       throw JsonDesearilizationException();

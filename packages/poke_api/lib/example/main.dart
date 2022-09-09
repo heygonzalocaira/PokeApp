@@ -4,9 +4,9 @@ void main() async {
   final pokeApiClient = PokeApiClient();
 
   try {
-    final pokemons = await pokeApiClient.getRangePokemons(20);
-    for (final pokemon in pokemons) {
-      print(pokemon.name);
+    final pokemonsAbilities = await pokeApiClient.getPokemonsAbilities(20);
+    for (final pokemonAbility in pokemonsAbilities) {
+      print(pokemonAbility.name);
     }
   } on Exception catch (e) {
     print(e);

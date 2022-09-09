@@ -1,0 +1,65 @@
+{
+    // Use IntelliSense para saber los atributos posibles.
+    // Mantenga el puntero para ver las descripciones de los existentes atributos.
+    // Para más información, visite: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "bloc_pokeapi",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "bloc_pokeapi (profile mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "bloc_pokeapi (release mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "poke_api",
+            "cwd": "packages\\poke_api",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "poke_api (profile mode)",
+            "cwd": "packages\\poke_api",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "poke_api (release mode)",
+            "cwd": "packages\\poke_api",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "poke_repository",
+            "cwd": "packages\\poke_repository",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "poke_repository (profile mode)",
+            "cwd": "packages\\poke_repository",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "poke_repository (release mode)",
+            "cwd": "packages\\poke_repository",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        }
+    ]
+}

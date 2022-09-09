@@ -39,6 +39,8 @@ dependencies:
   poke_repository:
     path: packages/poke_repository
   flutter_bloc: ^8.1.1
+  pull_to_refresh: ^2.0.0
+  internet_connection_checker: ^0.0.1+4
 
 dev_dependencies:
   flutter_test:

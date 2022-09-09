@@ -1,19 +1,30 @@
+import 'package:bloc_pokeapi/AbilityPage/ability_page.dart';
 import 'package:flutter/material.dart';
-import 'dart:math' as math;
 
 class PokemonCard extends StatelessWidget {
   const PokemonCard({
     required this.name,
+    required this.url,
     Key? key,
   }) : super(key: key);
   final String name;
+  final String url;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => AbilityPage(
+              name: name,
+              url: url,
+            ),
+          ),
+        );
+      },
       child: Card(
-        color: Color((math.Random().nextDouble() * 0xFFFFFF).toInt())
-            .withOpacity(1.0),
+        color: Colors.green[300],
         elevation: 1,
         child: SizedBox(
           height: 50,
