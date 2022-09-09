@@ -9,7 +9,7 @@ part 'pokemon_ability_state.dart';
 class PokemonAbilityCubit extends Cubit<PokemonAbilityState> {
   PokemonAbilityCubit(this._pokemonRepository)
       : super(const PokemonAbilityState()) {
-    _internetConnectionChecker.onStatusChange.listen((status) {
+    /*_internetConnectionChecker.onStatusChange.listen((status) {
       switch (status) {
         case InternetConnectionStatus.connected:
           emit(state.copyWith(connection: true));
@@ -18,7 +18,7 @@ class PokemonAbilityCubit extends Cubit<PokemonAbilityState> {
           emit(state.copyWith(connection: false));
           break;
       }
-    });
+    });*/
   }
   final PokeRepository _pokemonRepository;
   late InternetConnectionChecker _internetConnectionChecker;
