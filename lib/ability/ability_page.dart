@@ -8,15 +8,17 @@ class AbilityPage extends StatelessWidget {
   const AbilityPage({
     required this.name,
     required this.url,
+    required this.index,
     super.key,
   });
   final String name;
   final String url;
+  final int index;
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => PokemonAbilityCubit(context.read<PokeRepository>())
-        ..getPokemonAbilities(),
+        ..getPokemonAbilities(index),
       child: AbilityView(name: name),
     );
   }

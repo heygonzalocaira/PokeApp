@@ -34,9 +34,10 @@ class PokeRepository {
     return _pokemons;
   }
 
-  Future<List<PokemonAbilityRepository>> fetchPokemonsAbilities() async {
+  Future<List<PokemonAbilityRepository>> fetchPokemonsAbilities(
+      int index) async {
     try {
-      final pokemons = await _pokeApiClient.getPokemonsAbilities(1);
+      final pokemons = await _pokeApiClient.getPokemonsAbilities(index);
       final json = pokemons.map((item) => item.toJson(item)).toList();
       return json.map(PokemonAbilityRepository.fromJson).toList();
     } on HttpException catch (e, stackTrace) {

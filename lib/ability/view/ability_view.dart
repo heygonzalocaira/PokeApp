@@ -1,5 +1,5 @@
-import 'package:bloc_pokeapi/AbilityPage/cubit/pokemon_ability_cubit.dart';
-import 'package:bloc_pokeapi/AbilityPage/widgets/pokemon_ability_card.dart';
+import 'package:bloc_pokeapi/ability/cubit/pokemon_ability_cubit.dart';
+import 'package:bloc_pokeapi/ability/widgets/pokemon_ability_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:poke_repository/poke_repository.dart';
@@ -21,11 +21,15 @@ class AbilityView extends StatelessWidget {
       ),
       body: BlocBuilder<PokemonAbilityCubit, PokemonAbilityState>(
         builder: (context, state) {
+          if (state.connection == false) {
+            return const Text("No internet connection");
+          }
           switch (state.status) {
             case PokemonsAbilityStatus.initial:
               return const _PokemonsAbilityViewInitial();
             case PokemonsAbilityStatus.sucess:
               return _PokemonAbilityViewSucess(abilities: state.abilities);
+
             default:
               return _PokemonsAbilityViewFailure(error: state.errorMessage);
           }

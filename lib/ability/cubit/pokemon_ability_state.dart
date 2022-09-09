@@ -6,21 +6,24 @@ class PokemonAbilityState extends Equatable {
   final String errorMessage;
   final PokemonsAbilityStatus status;
   final List<PokemonAbilityRepository> abilities;
-
+  final bool connection;
   const PokemonAbilityState({
     this.errorMessage = "",
     this.status = PokemonsAbilityStatus.initial,
     this.abilities = const <PokemonAbilityRepository>[],
+    this.connection = true,
   });
 
   PokemonAbilityState copyWith(
       {String? errorMessage,
       PokemonsAbilityStatus? status,
-      List<PokemonAbilityRepository>? abilities}) {
+      List<PokemonAbilityRepository>? abilities,
+      bool? connection}) {
     return PokemonAbilityState(
       errorMessage: errorMessage ?? this.errorMessage,
       status: status ?? this.status,
       abilities: abilities ?? this.abilities,
+      connection: connection ?? this.connection,
     );
   }
 

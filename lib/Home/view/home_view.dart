@@ -100,6 +100,7 @@ class _PokemonViewSuccessState extends State<_PokemonViewSuccess> {
               return PokemonCard(
                 name: widget.pokemonlist[index].name.toUpperCase(),
                 url: widget.pokemonlist[index].url,
+                index: index + 1,
               );
             })),
       ),
