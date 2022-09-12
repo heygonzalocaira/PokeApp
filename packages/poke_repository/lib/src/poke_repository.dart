@@ -1,8 +1,9 @@
 // ignore_for_file: public_member_api_docs, join_return_with_assignment
 
+import 'dart:async';
+
 import 'package:poke_api/poke_api.dart';
 import 'package:poke_repository/poke_repository.dart';
-import 'package:poke_repository/src/models/pokemon_ability_model.dart';
 
 /// {@template poke_repository}
 /// My new Flutter package
@@ -13,14 +14,29 @@ class PokeRepository {
 
   final PokeApiClient _pokeApiClient;
 
-  List<PokemonRepository> get pokemons => _pokemons;
-  final List<PokemonRepository> _pokemons = [];
+  List<PokemonModel> get pokemons => _pokemons;
+  final List<PokemonModel> _pokemons = [];
+  final List<PokemonModel> _favorites = [];
+  final _favoriteController = StreamController<List<PokemonModel>>();
+  //final List<PokemonRepository> _pokemonFavorities = [];
 
-  Future<List<PokemonRepository>> fetchRangePokemons() async {
+  Stream<List<PokemonModel>> get pokemonFavorities =>
+      _favoriteController.stream.asBroadcastStream();
+
+  void addToStream(PokemonModel item) {
+    _favorites.add(item);
+    return _favoriteController.add(_favorites);
+  }
+
+  void dispose() {
+    _favoriteController.close();
+  }
+
+  Future<List<PokemonModel>> fetchRangePokemons() async {
     try {
       final pokemons = await _pokeApiClient.getRangePokemons(_pokemons.length);
       final json = pokemons.map((item) => item.toJson(item)).toList();
-      final listPokemons = json.map(PokemonRepository.fromJson).toList();
+      final listPokemons = json.map(PokemonModel.fromJson).toList();
       _pokemons.addAll(listPokemons);
     } on HttpException catch (e, stackTrace) {
       throw PokemonHttpException(e, stackTrace: stackTrace);

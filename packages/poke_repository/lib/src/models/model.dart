@@ -1,2 +1,2 @@
-export 'pokemon_repository.dart';
+export 'pokemon_model.dart';
 export 'pokemon_ability_model.dart';
