@@ -2,7 +2,7 @@
 
 import 'package:poke_api/poke_api.dart';
 import 'package:poke_repository/poke_repository.dart';
-import 'package:poke_repository/src/models/pokemon_ability_repository.dart';
+import 'package:poke_repository/src/models/pokemon_ability_model.dart';
 
 /// {@template poke_repository}
 /// My new Flutter package
@@ -34,12 +34,11 @@ class PokeRepository {
     return _pokemons;
   }
 
-  Future<List<PokemonAbilityRepository>> fetchPokemonsAbilities(
-      int index) async {
+  Future<List<PokemonAbilityModel>> fetchPokemonsAbilities(int index) async {
     try {
       final pokemons = await _pokeApiClient.getPokemonsAbilities(index);
       final json = pokemons.map((item) => item.toJson(item)).toList();
-      return json.map(PokemonAbilityRepository.fromJson).toList();
+      return json.map(PokemonAbilityModel.fromJson).toList();
     } on HttpException catch (e, stackTrace) {
       throw PokemonHttpException(e, stackTrace: stackTrace);
     } on HttpRequestFailure catch (e, stackTrace) {
