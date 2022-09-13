@@ -16,8 +16,9 @@ class PokeRepository {
 
   List<PokemonModel> get pokemons => _pokemons;
   final List<PokemonModel> _pokemons = [];
+  List<PokemonModel> get favorites => _favorites;
   final List<PokemonModel> _favorites = [];
-  final _favoriteController = StreamController<List<PokemonModel>>();
+  final _favoriteController = StreamController<List<PokemonModel>>.broadcast();
   //final List<PokemonRepository> _pokemonFavorities = [];
 
   Stream<List<PokemonModel>> get pokemonFavorities =>
@@ -25,6 +26,7 @@ class PokeRepository {
 
   void addToStream(PokemonModel item) {
     _favorites.add(item);
+    print(_favorites);
     return _favoriteController.add(_favorites);
   }
 
