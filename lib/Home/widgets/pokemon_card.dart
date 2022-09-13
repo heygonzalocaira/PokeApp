@@ -1,15 +1,15 @@
-import 'package:bloc_pokeapi/ability/ability_page.dart';
+import 'package:bloc_pokeapi/ability/view/ability_page.dart';
 import 'package:flutter/material.dart';
+import 'package:poke_repository/poke_repository.dart';
 
 class PokemonCard extends StatelessWidget {
   const PokemonCard({
-    required this.name,
-    required this.url,
+    required this.pokemon,
     required this.index,
     Key? key,
   }) : super(key: key);
-  final String name;
-  final String url;
+  final PokemonModel pokemon;
+
   final int index;
   @override
   Widget build(BuildContext context) {
@@ -19,8 +19,7 @@ class PokemonCard extends StatelessWidget {
           context,
           MaterialPageRoute(
             builder: (context) => AbilityPage(
-              name: name,
-              url: url,
+              pokemon: pokemon,
               index: index,
             ),
           ),
@@ -32,7 +31,7 @@ class PokemonCard extends StatelessWidget {
         child: SizedBox(
           height: 50,
           child: Center(
-            child: Text(name),
+            child: Text(pokemon.name.toUpperCase()),
           ),
         ),
       ),

@@ -1,6 +1,6 @@
-import 'package:bloc_pokeapi/Home/cubit/pokemon_cubit.dart';
 import 'package:bloc_pokeapi/Home/view/home_view.dart';
-import 'package:bloc_pokeapi/cubit/internet_connection_cubit.dart';
+import 'package:bloc_pokeapi/home/cubit/home_cubit.dart';
+import 'package:bloc_pokeapi/internet/cubit/internet_connection_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
@@ -15,7 +15,7 @@ class HomePage extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) =>
-              PokemonCubit(context.read<PokeRepository>())..fetchPokemons(),
+              HomeCubit(context.read<PokeRepository>())..fetchPokemons(),
         ),
         BlocProvider(
           create: (context) =>

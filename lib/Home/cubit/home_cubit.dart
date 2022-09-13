@@ -2,10 +2,14 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:poke_repository/poke_repository.dart';
 
-part 'pokemon_state.dart';
+part 'home_state.dart';
 
-class PokemonCubit extends Cubit<PokemonState> {
-  PokemonCubit(this._pokemonRepository) : super(const PokemonState());
+class HomeCubit extends Cubit<HomeState> {
+  HomeCubit(this._pokemonRepository) : super(const HomeState()) {
+    _pokemonRepository.pokemonFavorities.listen((favorities) {
+      emit(state.copyWith(favorities: favorities));
+    });
+  }
   final PokeRepository _pokemonRepository;
 
   void _failureLoadMore(dynamic error) {
@@ -21,7 +25,6 @@ class PokemonCubit extends Cubit<PokemonState> {
     if (state.status != PokemonStatus.initital) {
       emit(state.copyWith(status: PokemonStatus.loading));
     }
-
     try {
       final pokemons = await _pokemonRepository.fetchRangePokemons();
       emit(state.copyWith(status: PokemonStatus.sucess, pokemons: pokemons));
