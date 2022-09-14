@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:poke_repository/poke_repository.dart';
@@ -6,12 +8,13 @@ part 'home_state.dart';
 
 class HomeCubit extends Cubit<HomeState> {
   HomeCubit(this._pokemonRepository) : super(const HomeState()) {
-    _pokemonRepository.pokemonFavorities.listen((favorities) {
+    _favoritesSuscription =
+        _pokemonRepository.pokemonFavorities.listen((favorities) {
       emit(state.copyWith(favorities: favorities));
     });
   }
   final PokeRepository _pokemonRepository;
-
+  late StreamSubscription<List<PokemonModel>> _favoritesSuscription;
   void _failureLoadMore(dynamic error) {
     if (state.status == HomeStatus.loading) {
       emit(state.copyWith(
@@ -40,5 +43,11 @@ class HomeCubit extends Cubit<HomeState> {
       emit(state.copyWith(
           status: HomeStatus.failure, errorMessage: error.toString()));
     }
+  }
+
+  @override
+  Future<void> close() {
+    _favoritesSuscription.cancel();
+    return super.close();
   }
 }

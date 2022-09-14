@@ -25,7 +25,7 @@ class PokemonListTab extends StatelessWidget {
           case HomeStatus.sucess:
             return PokemonViewSuccess(pokemonlist: state.pokemons);
           default:
-            return _PokemonViewFailure(error: state.errorMessage);
+            return PokemonViewFailure(error: state.errorMessage);
         }
       },
     );
@@ -89,8 +89,8 @@ class PokemonViewSuccessState extends State<PokemonViewSuccess> {
   }
 }
 
-class _PokemonViewFailure extends StatelessWidget {
-  const _PokemonViewFailure({
+class PokemonViewFailure extends StatelessWidget {
+  const PokemonViewFailure({
     required this.error,
     Key? key,
   }) : super(key: key);

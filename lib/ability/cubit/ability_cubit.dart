@@ -38,23 +38,23 @@ class AbilityCubit extends Cubit<AbilityState> {
   }
 
   Future<void> getPokemonAbilities(int index) async {
-    if (state.status != PokemonsAbilityStatus.initial) {
-      emit(state.copyWith(status: PokemonsAbilityStatus.loading));
+    if (state.status != AbilityStatus.initial) {
+      emit(state.copyWith(status: AbilityStatus.loading));
     }
     try {
       final pokemonAbilities =
           await _pokemonRepository.fetchPokemonsAbilities(index);
       emit(state.copyWith(
-          status: PokemonsAbilityStatus.sucess, abilities: pokemonAbilities));
+          status: AbilityStatus.sucess, abilities: pokemonAbilities));
     } on PokemonHttpException catch (e) {
       emit(state.copyWith(
-          errorMessage: e.toString(), status: PokemonsAbilityStatus.failure));
+          errorMessage: e.toString(), status: AbilityStatus.failure));
     } on PokemonJsonException catch (e) {
       emit(state.copyWith(
-          errorMessage: e.toString(), status: PokemonsAbilityStatus.failure));
+          errorMessage: e.toString(), status: AbilityStatus.failure));
     } on Exception catch (e) {
       emit(state.copyWith(
-          errorMessage: e.toString(), status: PokemonsAbilityStatus.failure));
+          errorMessage: e.toString(), status: AbilityStatus.failure));
     }
   }
 }

@@ -60,10 +60,10 @@ class AbilityView extends StatelessWidget {
       body: BlocBuilder<AbilityCubit, AbilityState>(
         builder: (context, state) {
           switch (state.status) {
-            case PokemonsAbilityStatus.initial:
+            case AbilityStatus.initial:
               return const _PokemonsAbilityViewInitial();
-            case PokemonsAbilityStatus.sucess:
-              return _PokemonAbilityViewSucess(abilities: state.abilities);
+            case AbilityStatus.sucess:
+              return PokemonAbilityViewSucess(abilities: state.abilities);
 
             default:
               return _PokemonsAbilityViewFailure(error: state.errorMessage);
@@ -74,8 +74,8 @@ class AbilityView extends StatelessWidget {
   }
 }
 
-class _PokemonAbilityViewSucess extends StatelessWidget {
-  const _PokemonAbilityViewSucess({
+class PokemonAbilityViewSucess extends StatelessWidget {
+  const PokemonAbilityViewSucess({
     required this.abilities,
     Key? key,
   }) : super(key: key);

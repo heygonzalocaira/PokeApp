@@ -1,17 +1,17 @@
 part of 'ability_cubit.dart';
 
-enum PokemonsAbilityStatus { initial, sucess, loading, failure }
+enum AbilityStatus { initial, sucess, loading, failure }
 
 class AbilityState extends Equatable {
   final String errorMessage;
-  final PokemonsAbilityStatus status;
+  final AbilityStatus status;
   final List<PokemonAbilityModel> abilities;
   final bool isFavorite;
   final String pokemonName;
 
   const AbilityState({
     this.errorMessage = "",
-    this.status = PokemonsAbilityStatus.initial,
+    this.status = AbilityStatus.initial,
     this.abilities = const <PokemonAbilityModel>[],
     this.isFavorite = false,
     this.pokemonName = "",
@@ -19,7 +19,7 @@ class AbilityState extends Equatable {
 
   AbilityState copyWith({
     String? errorMessage,
-    PokemonsAbilityStatus? status,
+    AbilityStatus? status,
     List<PokemonAbilityModel>? abilities,
     bool? isFavorite,
     String? pokemonName,

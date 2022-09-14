@@ -12,6 +12,7 @@ dependencies:
   poke_api:
     path: "../poke_api"
   json_annotation: ^4.6.0
+  equatable: ^2.0.5
 dev_dependencies:
   flutter_test:
     sdk: flutter

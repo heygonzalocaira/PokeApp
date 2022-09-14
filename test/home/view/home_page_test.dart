@@ -5,7 +5,6 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
-import 'package:bloc_pokeapi/home/cubit/home_cubit.dart';
 import 'package:bloc_pokeapi/home/home.dart';
 import 'package:bloc_pokeapi/home/view/favorite_tab.dart';
 import 'package:bloc_pokeapi/home/view/home_page.dart';
@@ -40,16 +39,20 @@ void main() {
       url: "https://google.com",
     ),
   ];
-  group("Verifying UI draw empty widget", () {
+  group("HomePage UI -", () {
     setUp(() {
       mockPokeRepository = MockPokeRepository();
-      mockHomeCubit = HomeCubit(mockPokeRepository);
+      mockHomeCubit = MockHomeCubit();
       when((() => mockPokeRepository.pokemonFavorities))
           .thenAnswer((_) => const Stream.empty());
     });
-    testWidgets("A list of pokemon is empty", (tester) async {
-      //final homeState = HomeState();
-      when(() => mockHomeCubit.state).thenReturn(HomeState());
+    testWidgets("1- Pokemons' list is empty", (tester) async {
+      when(() => mockHomeCubit.state).thenReturn(
+        const HomeState(
+          status: HomeStatus.sucess,
+          pokemons: [],
+        ),
+      );
       await tester.pumpWidget(
         MaterialApp(
           home: RepositoryProvider(
@@ -71,12 +74,12 @@ void main() {
           ),
         ),
       );
-      expect(find.byType(PokemonListTab), findsOneWidget);
+      expect(find.byType(PokemonCard), findsNothing);
     });
-    testWidgets("Second list of pokemon is empty", (tester) async {
-      final homeState = HomeState();
-      when(() => mockHomeCubit.state)
-          .thenReturn(homeState.copyWith(pokemons: []));
+    testWidgets("2- Pokemons' list with 3 items", (tester) async {
+      when(() => mockHomeCubit.state).thenReturn(
+        HomeState(status: HomeStatus.sucess, pokemons: mockPokemons),
+      );
       await tester.pumpWidget(
         MaterialApp(
           home: RepositoryProvider(
@@ -88,71 +91,41 @@ void main() {
           ),
         ),
       );
-      expect(find.byType(HomeView), findsOneWidget);
-    });
-  });
-  /*
-  group("Pokemons list", () {
-    late HomeCubit pokemonCubit;
-    setUp(() {
-      pokemonCubit = MockHomeCubit();
-      when(() => pokemonCubit.state).thenReturn(
-        HomeState(status: HomeStatus.sucess, pokemons: mockPokemons),
-      );
-    });
-    testWidgets("There are 3 pokomens in the list", (tester) async {
-      await tester.pumpWidget(
-        RepositoryProvider.value(
-          value: pokeRepository,
-          child: const MaterialApp(
-            home: DefaultTabController(
-              length: 2,
-              child: Scaffold(
-                body: TabBarView(
-                  children: [
-                    PokemonListTab(),
-                    SizedBox(),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ),
-      );
       expect(find.byType(PokemonCard), findsNWidgets(mockPokemons.length));
     });
-  });
-
-  group("Pokemon error", () {
-    late HomeCubit pokemonCubit;
-    setUp(() {
-      pokemonCubit = MockHomeCubit();
-      when(() => pokemonCubit.state).thenReturn(
+    testWidgets("3- Finding a widget error", (tester) async {
+      when(() => mockHomeCubit.state).thenReturn(
         const HomeState(status: HomeStatus.failure),
       );
-    });
-    testWidgets("HomeState status is failure", (tester) async {
       await tester.pumpWidget(
         RepositoryProvider.value(
-          value: pokeRepository,
-          child: const MaterialApp(
-            home: DefaultTabController(
-              length: 2,
-              child: Scaffold(
-                body: TabBarView(
-                  children: [
-                    PokemonListTab(),
-                    SizedBox(),
-                  ],
-                ),
-              ),
+          value: mockPokeRepository,
+          child: MaterialApp(
+            home: BlocProvider.value(
+              value: mockHomeCubit,
+              child: const PokemonListTab(),
             ),
           ),
         ),
       );
-     expect(find.byType(PokemonViewSuccess), findsNWidgets(mockPokemons.length));
+      expect(find.byType(PokemonViewFailure), findsOneWidget);
     });
-
+    testWidgets("4- Loading data", (tester) async {
+      when(() => mockHomeCubit.state).thenReturn(
+        const HomeState(status: HomeStatus.initital),
+      );
+      await tester.pumpWidget(
+        RepositoryProvider.value(
+          value: mockPokeRepository,
+          child: MaterialApp(
+            home: BlocProvider.value(
+              value: mockHomeCubit,
+              child: const PokemonListTab(),
+            ),
+          ),
+        ),
+      );
+      expect(find.byType(CircularProgressIndicator), findsOneWidget);
+    });
   });
-*/
 }
