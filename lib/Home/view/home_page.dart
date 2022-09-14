@@ -1,9 +1,8 @@
-import 'package:bloc_pokeapi/Home/view/home_view.dart';
 import 'package:bloc_pokeapi/home/cubit/home_cubit.dart';
-import 'package:bloc_pokeapi/internet/cubit/internet_connection_cubit.dart';
+import 'package:bloc_pokeapi/home/view/favorite_tab.dart';
+import 'package:bloc_pokeapi/home/view/pokemon_list_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:poke_repository/poke_repository.dart';
 
 class HomePage extends StatelessWidget {
@@ -11,19 +10,44 @@ class HomePage extends StatelessWidget {
   final String title;
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) =>
-              HomeCubit(context.read<PokeRepository>())..fetchPokemons(),
-        ),
-        BlocProvider(
-          create: (context) =>
-              InternetConnectionCubit(InternetConnectionChecker())
-                ..monitorInternet(),
-        ),
-      ],
+    return BlocProvider(
+      create: (context) =>
+          HomeCubit(context.read<PokeRepository>())..fetchPokemons(),
       child: HomeView(title: title),
+    );
+  }
+}
+
+class HomeView extends StatelessWidget {
+  const HomeView({
+    Key? key,
+    required this.title,
+  }) : super(key: key);
+
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          title: Text(title),
+          bottom: const TabBar(
+            tabs: [
+              Tab(text: "Pokemon list"),
+              Tab(text: "Favorites"),
+            ],
+          ),
+        ),
+        body: const TabBarView(
+          children: [
+            PokemonListTab(),
+            FavoriteTab(),
+          ],
+        ),
+      ),
     );
   }
 }

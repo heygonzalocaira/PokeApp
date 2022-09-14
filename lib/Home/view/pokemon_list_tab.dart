@@ -13,27 +13,19 @@ class PokemonListTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<InternetConnectionCubit, InternetConnectionState>(
+    return BlocBuilder<HomeCubit, HomeState>(
+      buildWhen: ((previous, current) {
+        return current.status != HomeStatus.loading &&
+            current.status != HomeStatus.failureLoadMore;
+      }),
       builder: (context, state) {
-        if (state.status == InternetStatus.noInternet) {
-          return const _NoInternetView();
-        } else {
-          return BlocBuilder<HomeCubit, HomeState>(
-            buildWhen: ((previous, current) {
-              return current.status != PokemonStatus.loading &&
-                  current.status != PokemonStatus.failureLoadMore;
-            }),
-            builder: (context, state) {
-              switch (state.status) {
-                case PokemonStatus.initital:
-                  return const _PokemonsViewInitial();
-                case PokemonStatus.sucess:
-                  return _PokemonViewSuccess(pokemonlist: state.pokemons);
-                default:
-                  return _PokemonViewFailure(error: state.errorMessage);
-              }
-            },
-          );
+        switch (state.status) {
+          case HomeStatus.initital:
+            return const _PokemonsViewInitial();
+          case HomeStatus.sucess:
+            return PokemonViewSuccess(pokemonlist: state.pokemons);
+          default:
+            return _PokemonViewFailure(error: state.errorMessage);
         }
       },
     );
@@ -51,28 +43,28 @@ class _NoInternetView extends StatelessWidget {
   }
 }
 
-class _PokemonViewSuccess extends StatefulWidget {
-  const _PokemonViewSuccess({
+class PokemonViewSuccess extends StatefulWidget {
+  const PokemonViewSuccess({
     required this.pokemonlist,
     Key? key,
   }) : super(key: key);
   final List<PokemonModel> pokemonlist;
 
   @override
-  State<_PokemonViewSuccess> createState() => _PokemonViewSuccessState();
+  State<PokemonViewSuccess> createState() => PokemonViewSuccessState();
 }
 
-class _PokemonViewSuccessState extends State<_PokemonViewSuccess> {
+class PokemonViewSuccessState extends State<PokemonViewSuccess> {
   final _refreshController = RefreshController(initialRefresh: false);
   final GlobalKey _contentKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
     return BlocListener<HomeCubit, HomeState>(
       listener: (context, state) {
-        if (state.status == PokemonStatus.sucess) {
+        if (state.status == HomeStatus.sucess) {
           _refreshController.loadComplete();
         }
-        if (state.status == PokemonStatus.failureLoadMore) {
+        if (state.status == HomeStatus.failureLoadMore) {
           _refreshController.loadFailed();
         }
       },

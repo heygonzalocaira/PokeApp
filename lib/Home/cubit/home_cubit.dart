@@ -13,33 +13,32 @@ class HomeCubit extends Cubit<HomeState> {
   final PokeRepository _pokemonRepository;
 
   void _failureLoadMore(dynamic error) {
-    if (state.status == PokemonStatus.loading) {
+    if (state.status == HomeStatus.loading) {
       emit(state.copyWith(
-          status: PokemonStatus.failureLoadMore,
-          errorMessage: error.toString()));
+          status: HomeStatus.failureLoadMore, errorMessage: error.toString()));
       return;
     }
   }
 
   Future<void> fetchPokemons() async {
-    if (state.status != PokemonStatus.initital) {
-      emit(state.copyWith(status: PokemonStatus.loading));
+    if (state.status != HomeStatus.initital) {
+      emit(state.copyWith(status: HomeStatus.loading));
     }
     try {
       final pokemons = await _pokemonRepository.fetchRangePokemons();
-      emit(state.copyWith(status: PokemonStatus.sucess, pokemons: pokemons));
+      emit(state.copyWith(status: HomeStatus.sucess, pokemons: pokemons));
     } on PokemonHttpException catch (error) {
       _failureLoadMore(error);
       emit(state.copyWith(
-          status: PokemonStatus.failure, errorMessage: error.toString()));
+          status: HomeStatus.failure, errorMessage: error.toString()));
     } on PokemonJsonException catch (error) {
       _failureLoadMore(error);
       emit(state.copyWith(
-          status: PokemonStatus.failure, errorMessage: error.toString()));
+          status: HomeStatus.failure, errorMessage: error.toString()));
     } on Exception catch (error) {
       _failureLoadMore(error);
       emit(state.copyWith(
-          status: PokemonStatus.failure, errorMessage: error.toString()));
+          status: HomeStatus.failure, errorMessage: error.toString()));
     }
   }
 }

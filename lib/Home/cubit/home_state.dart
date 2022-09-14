@@ -1,6 +1,6 @@
 part of 'home_cubit.dart';
 
-enum PokemonStatus {
+enum HomeStatus {
   initital,
   loading,
   sucess,
@@ -10,20 +10,20 @@ enum PokemonStatus {
 
 class HomeState extends Equatable {
   final String errorMessage;
-  final PokemonStatus status;
+  final HomeStatus status;
   final List<PokemonModel> pokemons;
   final List<PokemonModel> favorities;
 
   const HomeState({
     this.errorMessage = "",
-    this.status = PokemonStatus.initital,
+    this.status = HomeStatus.initital,
     this.pokemons = const <PokemonModel>[],
     this.favorities = const <PokemonModel>[],
   });
 
   HomeState copyWith({
     String? errorMessage,
-    PokemonStatus? status,
+    HomeStatus? status,
     List<PokemonModel>? pokemons,
     List<PokemonModel>? favorities,
   }) {

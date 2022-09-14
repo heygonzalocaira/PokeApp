@@ -1,3 +1,5 @@
+import 'dart:io' show Platform;
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
@@ -10,6 +12,9 @@ class InternetConnectionCubit extends Cubit<InternetConnectionState> {
   InternetConnectionChecker _internetConnectionChecker;
 
   Future<void> monitorInternet() async {
+    if (Platform.environment.containsKey('FLUTTER_TEST')) {
+      emit(state.copyWith(status: InternetStatus.haveInternet));
+    }
     try {
       final internet =
           _internetConnectionChecker.onStatusChange.listen((status) {
