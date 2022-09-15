@@ -104,7 +104,7 @@ void main() {
     );
     blocTest<HomeCubit, HomeState>(
       "Invokes fetchRangePokemons on PokeRepository"
-      "When fetchRangePokemons return an exception",
+      "Forcing an exception",
       setUp: (() => when(() => mockPokeRepository.fetchRangePokemons())
           .thenThrow(Exception())),
       build: () => HomeCubit(mockPokeRepository),
@@ -118,18 +118,30 @@ void main() {
     );
     blocTest<HomeCubit, HomeState>(
       "Invokes fetchRangePokemons on PokeRepository"
-      "When fetchRangePokemons return custom Exception (seed state loading)",
+      "Forcing PokemonHttpException with loading state",
       setUp: (() => when(() => mockPokeRepository.fetchRangePokemons())
-          .thenAnswer((_) async => [])),
+          .thenThrow(PokemonHttpException(null, stackTrace: StackTrace.empty))),
       build: () => HomeCubit(mockPokeRepository),
       seed: () => const HomeState(status: HomeStatus.loading),
-      act: (homeCubit) => homeCubit.fetchPokemons()
-        ..onError((error, stackTrace) =>
-            PokemonHttpException(error, stackTrace: stackTrace)),
+      act: (homeCubit) => homeCubit.fetchPokemons(),
       expect: () => <HomeState>[
         const HomeState(
           status: HomeStatus.failureLoadMore,
-          errorMessage: "PokemonHttpException",
+          errorMessage: "Instance of 'PokemonHttpException'",
+        ),
+      ],
+    );
+    blocTest<HomeCubit, HomeState>(
+      "Invokes fetchRangePokemons on PokeRepository"
+      "Forcing PokemonJsonException",
+      setUp: (() => when(() => mockPokeRepository.fetchRangePokemons())
+          .thenThrow(PokemonJsonException(null, stackTrace: StackTrace.empty))),
+      build: () => HomeCubit(mockPokeRepository),
+      act: (homeCubit) => homeCubit.fetchPokemons(),
+      expect: () => <HomeState>[
+        const HomeState(
+          status: HomeStatus.failure,
+          errorMessage: "Instance of 'PokemonJsonException'",
         ),
       ],
     );
