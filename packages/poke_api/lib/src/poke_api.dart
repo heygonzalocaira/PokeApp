@@ -1,7 +1,6 @@
 // ignore_for_file: public_member_api_docs
 
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:http/http.dart' as http;
 import 'package:poke_api/src/models/pokemon.dart';
@@ -16,10 +15,11 @@ class PokeApiClient {
 
   final http.Client _httpClient;
 
-  String endPoint = 'pokeapi.co';
+  final String _baseUrlPokemon = 'pokeapi.co';
+
   Future<List<Pokemon>> getRangePokemons(int offset) async {
     final query = <String, String>{'offset': offset.toString(), 'limit': '20'};
-    final uri = Uri.http(endPoint, '/api/v2/pokemon', query);
+    final uri = Uri.http(_baseUrlPokemon, '/api/v2/pokemon', query);
     return _fetchPokemonData(uri);
   }
 
@@ -28,7 +28,7 @@ class PokeApiClient {
     List body;
     try {
       response = await _httpClient.get(uri);
-    } on SocketException {
+    } on Exception {
       throw HttpException(message: 'No internet connection');
     }
     if (response.statusCode != 200) {
@@ -43,14 +43,14 @@ class PokeApiClient {
       return body
           .map((item) => Pokemon.fromJson(item as Map<String, dynamic>))
           .toList();
-    } catch (e) {
+    } catch (_) {
       throw JsonDesearilizationException();
     }
   }
 
   // Functions to get abilities from a pokemon
   Future<List<PokemonAbility>> getPokemonsAbilities(int index) async {
-    final uri = Uri.http(endPoint, '/api/v2/pokemon/$index');
+    final uri = Uri.http(_baseUrlPokemon, '/api/v2/pokemon/$index');
     return _fetchPokemonAbility(uri);
   }
 
@@ -59,7 +59,7 @@ class PokeApiClient {
     List body;
     try {
       response = await _httpClient.get(uri);
-    } on SocketException {
+    } on Exception {
       throw HttpException(message: 'No internet connection');
     }
     if (response.statusCode != 200) {
@@ -73,9 +73,9 @@ class PokeApiClient {
     try {
       return body
           .map((item) =>
-              PokemonAbility.fromJson(item['ability'] as Map<String, dynamic>))
+              PokemonAbility.fromJson(item['ability'] as Map<String, dynamic>),)
           .toList();
-    } catch (e) {
+    } catch (_) {
       throw JsonDesearilizationException();
     }
   }

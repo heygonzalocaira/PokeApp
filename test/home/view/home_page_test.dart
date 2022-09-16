@@ -26,15 +26,15 @@ void main() {
   late HomeCubit mockHomeCubit;
   late PokeRepository mockPokeRepository;
   final mockPokemons = [
-    PokemonModel(
+    const PokemonModel(
       name: "pikachu",
       url: "https://google.com",
     ),
-    PokemonModel(
+    const PokemonModel(
       name: "squirtle",
       url: "https://google.com",
     ),
-    PokemonModel(
+    const PokemonModel(
       name: "chamander",
       url: "https://google.com",
     ),

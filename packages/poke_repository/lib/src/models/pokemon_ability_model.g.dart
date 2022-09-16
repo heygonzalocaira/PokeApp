@@ -13,7 +13,7 @@ PokemonAbilityModel _$PokemonAbilityModelFromJson(Map<String, dynamic> json) =>
     );
 
 Map<String, dynamic> _$PokemonAbilityModelToJson(
-        PokemonAbilityModel instance) =>
+        PokemonAbilityModel instance,) =>
     <String, dynamic>{
       'name': instance.name,
       'url': instance.url,

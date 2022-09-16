@@ -10,15 +10,15 @@ class MockPokemonModel extends Mock implements PokemonModel {}
 
 void main() {
   final mockPokemons = [
-    PokemonModel(
+    const PokemonModel(
       name: "",
       url: "",
     ),
-    PokemonModel(
+    const PokemonModel(
       name: "squirtle",
       url: "https://google.com",
     ),
-    PokemonModel(
+    const PokemonModel(
       name: "chamander",
       url: "https://google.com",
     ),
@@ -50,14 +50,14 @@ void main() {
       build: () => HomeCubit(mockPokeRepository),
       seed: () => HomeState(
         status: HomeStatus.sucess,
-        pokemons: List.generate(20, (index) => PokemonModel(name: "", url: "")),
+        pokemons: List.generate(20, (index) => const PokemonModel(name: "", url: "")),
       ),
       act: (homeCubit) => homeCubit.fetchPokemons(),
       expect: () => <HomeState>[
         HomeState(
           status: HomeStatus.loading,
           pokemons:
-              List.generate(20, (index) => PokemonModel(name: "", url: "")),
+              List.generate(20, (index) => const PokemonModel(name: "", url: "")),
         ),
         const HomeState(
           status: HomeStatus.sucess,
@@ -71,7 +71,7 @@ void main() {
       setUp: () {
         when(() => mockPokeRepository.fetchRangePokemons()).thenAnswer(
             (_) async =>
-                List.generate(20, (index) => PokemonModel(name: "", url: "")));
+                List.generate(20, (index) => const PokemonModel(name: "", url: "")));
       },
       build: () => HomeCubit(mockPokeRepository),
       act: (homeCubit) => homeCubit.fetchPokemons(),
@@ -79,7 +79,7 @@ void main() {
         HomeState(
           status: HomeStatus.sucess,
           pokemons:
-              List.generate(20, (index) => PokemonModel(name: "", url: "")),
+              List.generate(20, (index) => const PokemonModel(name: "", url: "")),
         ),
       ],
     );
@@ -89,7 +89,7 @@ void main() {
       setUp: () {
         when(() => mockPokeRepository.fetchRangePokemons()).thenAnswer(
             (_) async =>
-                List.generate(20, (index) => PokemonModel(name: "", url: "")));
+                List.generate(20, (index) => const PokemonModel(name: "", url: "")));
       },
       build: () => HomeCubit(mockPokeRepository),
       seed: () => const HomeState(status: HomeStatus.loading),
@@ -98,7 +98,7 @@ void main() {
         HomeState(
           status: HomeStatus.sucess,
           pokemons:
-              List.generate(20, (index) => PokemonModel(name: "", url: "")),
+              List.generate(20, (index) => const PokemonModel(name: "", url: "")),
         ),
       ],
     );

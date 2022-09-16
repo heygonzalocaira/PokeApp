@@ -5,14 +5,14 @@ part 'pokemon_model.g.dart';
 
 @JsonSerializable()
 class PokemonModel extends Equatable {
-  PokemonModel({
+  const PokemonModel({
     required this.name,
     required this.url,
   });
-  final String name;
-  final String url;
   factory PokemonModel.fromJson(Map<String, dynamic> json) =>
       _$PokemonModelFromJson(json);
+  final String name;
+  final String url;
   Map<String, dynamic> toJson() => _$PokemonModelToJson(this);
 
   @override

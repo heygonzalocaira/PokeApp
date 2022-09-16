@@ -9,7 +9,7 @@ class InternetConnectionCubit extends Cubit<InternetConnectionState> {
   InternetConnectionCubit(this._internetConnectionChecker)
       : super(const InternetConnectionState());
 
-  InternetConnectionChecker _internetConnectionChecker;
+  final InternetConnectionChecker _internetConnectionChecker;
 
   Future<void> monitorInternet() async {
     if (Platform.environment.containsKey('FLUTTER_TEST')) {

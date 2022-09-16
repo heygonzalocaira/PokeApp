@@ -1,6 +1,5 @@
 import 'package:bloc_pokeapi/home/cubit/home_cubit.dart';
 import 'package:bloc_pokeapi/home/widgets/pokemon_card.dart';
-import 'package:bloc_pokeapi/internet/cubit/internet_connection_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:poke_repository/poke_repository.dart';

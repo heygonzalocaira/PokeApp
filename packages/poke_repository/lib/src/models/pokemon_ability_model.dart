@@ -8,11 +8,11 @@ class PokemonAbilityModel {
     required this.name,
     required this.url,
   });
+  factory PokemonAbilityModel.fromJson(Map<String, dynamic> json) =>
+      _$PokemonAbilityModelFromJson(json);
 
   final String name;
   final String url;
-  factory PokemonAbilityModel.fromJson(Map<String, dynamic> json) =>
-      _$PokemonAbilityModelFromJson(json);
   Map<String, dynamic> toJson(PokemonAbilityModel item) =>
       _$PokemonAbilityModelToJson(this);
 }

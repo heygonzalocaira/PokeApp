@@ -8,11 +8,11 @@ class PokemonAbility {
     required this.name,
     required this.url,
   });
+  factory PokemonAbility.fromJson(Map<String, dynamic> json) =>
+      _$PokemonAbilityFromJson(json);
 
   final String name;
   final String url;
-  factory PokemonAbility.fromJson(Map<String, dynamic> json) =>
-      _$PokemonAbilityFromJson(json);
   Map<String, dynamic> toJson(PokemonAbility item) =>
       _$PokemonAbilityToJson(this);
 }

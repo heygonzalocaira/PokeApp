@@ -1,7 +1,5 @@
 import 'package:bloc_pokeapi/ability/ability.dart';
-import 'package:bloc_pokeapi/ability/view/ability_page.dart';
 import 'package:bloc_test/bloc_test.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:poke_repository/poke_repository.dart';
