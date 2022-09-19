@@ -117,10 +117,16 @@ void main() {
   });
   test('the http call completes with an error', () async {
     final mockResponse = MockResponse();
+    //when(() => mockResponse.statusCode).thenThrow(200);
     when(() => mockHttpClient.get(any())).thenThrow(Exception);
-    expect(
-      () async => pokeApiClient.getRangePokemons(0),
-      throwsA(isA<HttpException>()),
-    );
+    try {
+      await pokeApiClient.getRangePokemons(0);
+    } catch (e) {
+      expect(e, HttpException);
+    }
+    // expect(
+    //   await pokeApiClient.getRangePokemons(0),
+    //   throwsA(isA<HttpException>()),
+    // );
   });
 }

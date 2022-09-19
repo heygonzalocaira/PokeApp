@@ -29,7 +29,7 @@ class PokeApiClient {
     try {
       response = await _httpClient.get(uri);
     } on Exception {
-      throw HttpException(message: 'No internet connection');
+      throw HttpException();
     }
     if (response.statusCode != 200) {
       throw HttpRequestFailure(response.statusCode);
@@ -60,7 +60,7 @@ class PokeApiClient {
     try {
       response = await _httpClient.get(uri);
     } on Exception {
-      throw HttpException(message: 'No internet connection');
+      throw HttpException();
     }
     if (response.statusCode != 200) {
       throw HttpRequestFailure(response.statusCode);
@@ -72,8 +72,10 @@ class PokeApiClient {
     }
     try {
       return body
-          .map((item) =>
-              PokemonAbility.fromJson(item['ability'] as Map<String, dynamic>),)
+          .map(
+            (item) => PokemonAbility.fromJson(
+                item['ability'] as Map<String, dynamic>),
+          )
           .toList();
     } catch (_) {
       throw JsonDesearilizationException();
@@ -90,8 +92,4 @@ class HttpRequestFailure implements Exception {
   final int statusCode;
 }
 
-class HttpException implements Exception {
-  HttpException({required this.message});
-
-  final String message;
-}
+class HttpException implements Exception {}
